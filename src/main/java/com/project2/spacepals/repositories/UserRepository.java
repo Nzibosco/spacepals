@@ -1,6 +1,5 @@
 package com.project2.spacepals.repositories;
 
-
 import com.project2.spacepals.entities.Users;
 import com.project2.spacepals.web.dtos.Credentials;
 import org.hibernate.Session;
@@ -21,34 +20,28 @@ public class UserRepository implements CrudRepositories<Users> {
         this.sessionFactory = factory;
     }
 
-    public Users findUserByEmail(String email){
-        Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("from Users u where u.email = :em", Users.class)
-                .setParameter("em", email).getSingleResult();
-    }
-
     public Users findUserByCredentials(Credentials creds){
         Session session = sessionFactory.getCurrentSession();
-            return session.createQuery("from Users u where u.email = :em and u.password = :pw", Users.class)
-                    .setParameter("em", creds.getEmail())
-                    .setParameter("pw", creds.getPassword())
-                    .getSingleResult();
-        }
+        return session.createQuery("from Users u where u.email = :em and u.password = :pw", Users.class)
+                .setParameter("em", creds.getEmail())
+                .setParameter("pw", creds.getPassword())
+                .getSingleResult();
+    }
 
 
     @Override
     public List<Users> findAll() {
-        List<Users> user = new ArrayList<>();
+        List<Users> users = new ArrayList<>();
         Session session = sessionFactory.getCurrentSession();
-            user = session.createQuery("from User", Users.class).getResultList();
+        users = session.createQuery("from Users", Users.class).getResultList();
 
-        return user;
+        return users;
     }
 
     @Override
     public Users findById(int id) {
         Session session = sessionFactory.getCurrentSession();
-            return session.get(Users.class, id);
+        return session.get(Users.class, id);
 
     }
 
@@ -63,17 +56,17 @@ public class UserRepository implements CrudRepositories<Users> {
     public boolean update(Users updatedObj) {
         boolean updateSuccessful = false;
         Session session = sessionFactory.getCurrentSession();
-            session.createQuery("update from User u where u.id = :id and u.role = :newrole", Users.class)
-                    .setParameter("id", updatedObj.getId()).setParameter("newrole",updatedObj.getRole());
-            return updateSuccessful;
+        session.createQuery("update from Users u where u.id = :id and u.role = :newrole", Users.class)
+                .setParameter("id", updatedObj.getId()).setParameter("newrole",updatedObj.getRole());
+        return updateSuccessful;
     }
 
     @Override
     public boolean deleteById(Users deletedObj) {
         boolean deleteSuccessful = false;
         Session session = sessionFactory.getCurrentSession();
-            session.createQuery("delete from User u where u.id = :id", Users.class)
-                    .setParameter("id",deletedObj.getId());
+        session.createQuery("delete from Users u where u.id = :id", Users.class)
+                .setParameter("id",deletedObj.getId());
         return deleteSuccessful;
     }
 }

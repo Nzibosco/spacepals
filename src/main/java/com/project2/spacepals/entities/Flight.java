@@ -12,21 +12,21 @@ import java.util.Objects;
 public class Flight {
 
     @Id
-    @Column(name="flight_id")
+    @Column(name = "flight_id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
 
-    @Column(name="available_seats", nullable = false)
+    @Column(name = "available_seats", nullable = false)
     private int availableSeats;
 
-    @Column(name="total_seats", nullable = false)
+    @Column(name = "total_seats", nullable = false)
     private int totalSeats;
 
     @JoinColumn
     @ManyToOne(cascade = CascadeType.ALL)
     private Company company;
 
-    @Column(name="flight_duration")
+    @Column(name = "flight_duration")
     private String flightDuration;
 
     @Column(name="arrival_time")
@@ -43,17 +43,17 @@ public class Flight {
     @ManyToOne(cascade = CascadeType.ALL)
     private Planet flightDeparturePoint;
 
-    @Column(name="flight_cost")
+    @Column(name = "flight_cost")
     private double flightCost;
 
     @Enumerated(EnumType.ORDINAL)
     private FlightStatus flightStatus;
 
-    @JoinTable(name = "USERS_FLIGHTS", joinColumns = @JoinColumn(name="flight_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @JoinTable(name = "USERS_FLIGHTS", joinColumns = @JoinColumn(name = "flight_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     @ManyToMany(cascade = CascadeType.ALL)
-    private List<Users> passengers ;
+    private List<Users> passengers;
 
-    public Flight(){
+    public Flight() {
         super();
     }
 
