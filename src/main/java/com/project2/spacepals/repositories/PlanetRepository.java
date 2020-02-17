@@ -4,12 +4,20 @@ import com.project2.spacepals.entities.Planet;
 import com.project2.spacepals.entities.Users;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class PlanetRepository implements CrudRepositories<Planet> {
     private SessionFactory sessionFactory;
 
+    @Autowired
+    public PlanetRepository(SessionFactory factory){
+        super();
+        this.sessionFactory = factory;
+    }
 
     @Override
     public List<Planet> findAll() {

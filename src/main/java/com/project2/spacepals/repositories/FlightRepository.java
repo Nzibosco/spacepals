@@ -3,11 +3,19 @@ package com.project2.spacepals.repositories;
 import com.project2.spacepals.entities.Flight;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class FlightRepository implements CrudRepositories<Flight> {
     private SessionFactory sessionFactory;
+
+    public FlightRepository(SessionFactory factory){
+        super();
+        this.sessionFactory = factory;
+    }
+
 
 
     @Override

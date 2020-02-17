@@ -3,13 +3,28 @@ package com.project2.spacepals.repositories;
 import com.project2.spacepals.entities.Company;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class CompanyRepository implements CrudRepositories<Company> {
     private SessionFactory sessionFactory;
 
+    @Autowired
+    public CompanyRepository(SessionFactory factory){
+        super();
+        this.sessionFactory = factory;
+    }
 
+
+    public Company getCompanyByOwnerId(int id){
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("from Company c where c.owner = :id", Company.class)
+                .setParameter("id",  id).getSingleResult();
+
+    }
 
     @Override
     public List<Company> findAll() {

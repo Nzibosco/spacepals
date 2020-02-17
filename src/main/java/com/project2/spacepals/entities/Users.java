@@ -1,8 +1,5 @@
 package com.project2.spacepals.entities;
 
-<<<<<<< HEAD
-public class Users {
-=======
 import com.project2.spacepals.web.dtos.Principal;
 
 import javax.persistence.*;
@@ -30,7 +27,7 @@ public class Users {
     private String email;
 
     @Column(name = "phone_number", nullable = false)
-    private int phoneNumber;
+    private String phoneNumber;
 
     @Column(name = "birth_date",nullable = false)
     private LocalDate birthDate;
@@ -57,7 +54,7 @@ public class Users {
         super();
     }
 
-    public Users(String firstName, String lastName, String email, int phoneNumber, LocalDate birthDate, String password, String planetOfResidency, String gender, int frequentFlyerPoints, Role role, List<Company> company) {
+    public Users(String firstName, String lastName, String email, String phoneNumber, LocalDate birthDate, String password, String planetOfResidency, String gender, int frequentFlyerPoints, Role role, List<Company> company) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -71,7 +68,20 @@ public class Users {
         this.company = company;
     }
 
-    public Users(int id, String firstName, String lastName, String email, int phoneNumber, LocalDate birthDate, String password, String planetOfResidency, String gender, int frequentFlyerPoints, Role role, List<Company> company) {
+    public Users(String firstName, String lastName, String email, String phoneNumber, LocalDate birthDate, String password, String planetOfResidency, String gender, int frequentFlyerPoints, Role role) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.birthDate = birthDate;
+        this.password = password;
+        this.planetOfResidency = planetOfResidency;
+        this.gender = gender;
+        this.frequentFlyerPoints = frequentFlyerPoints;
+        this.role = role;
+    }
+
+    public Users(int id, String firstName, String lastName, String email, String phoneNumber, LocalDate birthDate, String password, String planetOfResidency, String gender, int frequentFlyerPoints, Role role, List<Company> company) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -118,11 +128,11 @@ public class Users {
         this.email = email;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -227,5 +237,4 @@ public class Users {
                 ", company=" + company +
                 '}';
     }
->>>>>>> c8b5f75d7054988acc6f38daf7775736a7c90e9f
 }

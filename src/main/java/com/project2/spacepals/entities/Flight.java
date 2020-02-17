@@ -1,20 +1,7 @@
 package com.project2.spacepals.entities;
 
-<<<<<<< HEAD
-public class Flight {
-
-    private int id;
-    private int seats;
-    private int availableSeats;
-    private int aircraft; // probably changing to an aircraft Object / enum
-    private int companyId;
-    private int flightDuration;
-    private int destination;
-    private int departurePointId;
-    private double cost;
-    private int statusId;
-=======
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -42,13 +29,19 @@ public class Flight {
     @Column(name="flight_duration")
     private String flightDuration;
 
+    @Column(name="arrival_time")
+    private Timestamp arrivalTime;
+
+    @Column(name = "departure_time")
+    private Timestamp departureTime;
+
     @JoinColumn
     @ManyToOne(cascade = CascadeType.ALL)
     private Planet flightDestination;
 
     @JoinColumn
     @ManyToOne(cascade = CascadeType.ALL)
-    private Planet flightDeparture;
+    private Planet flightDeparturePoint;
 
     @Column(name="flight_cost")
     private double flightCost;
@@ -64,26 +57,44 @@ public class Flight {
         super();
     }
 
-    public Flight(int availableSeats, int totalSeats, Company company, String flightDuration, Planet flightDestination, Planet flightDeparture, double flightCost, FlightStatus flightStatus, List<Users> passengers) {
+    public Flight(int availableSeats, int totalSeats, Company company, String flightDuration, Timestamp arrivalTime, Timestamp departureTime, Planet flightDestination, Planet flightDeparturePoint, double flightCost, FlightStatus flightStatus, List<Users> passengers) {
         this.availableSeats = availableSeats;
         this.totalSeats = totalSeats;
         this.company = company;
         this.flightDuration = flightDuration;
+        this.arrivalTime = arrivalTime;
+        this.departureTime = departureTime;
         this.flightDestination = flightDestination;
-        this.flightDeparture = flightDeparture;
+        this.flightDeparturePoint = flightDeparturePoint;
         this.flightCost = flightCost;
         this.flightStatus = flightStatus;
         this.passengers = passengers;
     }
 
-    public Flight(int id, int availableSeats, int totalSeats, Company company, String flightDuration, Planet flightDestination, Planet flightDeparture, double flightCost, FlightStatus flightStatus, List<Users> passengers) {
+    public Flight(int id, int availableSeats, int totalSeats, Company company, String flightDuration, Timestamp arrivalTime, Timestamp departureTime, Planet flightDestination, Planet flightDeparturePoint, double flightCost, FlightStatus flightStatus) {
         this.id = id;
         this.availableSeats = availableSeats;
         this.totalSeats = totalSeats;
         this.company = company;
         this.flightDuration = flightDuration;
+        this.arrivalTime = arrivalTime;
+        this.departureTime = departureTime;
         this.flightDestination = flightDestination;
-        this.flightDeparture = flightDeparture;
+        this.flightDeparturePoint = flightDeparturePoint;
+        this.flightCost = flightCost;
+        this.flightStatus = flightStatus;
+    }
+
+    public Flight(int id, int availableSeats, int totalSeats, Company company, String flightDuration, Timestamp arrivalTime, Timestamp departureTime, Planet flightDestination, Planet flightDeparturePoint, double flightCost, FlightStatus flightStatus, List<Users> passengers) {
+        this.id = id;
+        this.availableSeats = availableSeats;
+        this.totalSeats = totalSeats;
+        this.company = company;
+        this.flightDuration = flightDuration;
+        this.arrivalTime = arrivalTime;
+        this.departureTime = departureTime;
+        this.flightDestination = flightDestination;
+        this.flightDeparturePoint = flightDeparturePoint;
         this.flightCost = flightCost;
         this.flightStatus = flightStatus;
         this.passengers = passengers;
@@ -137,12 +148,12 @@ public class Flight {
         this.flightDestination = flightDestination;
     }
 
-    public Planet getFlightDeparture() {
-        return flightDeparture;
+    public Planet getFlightDeparturePoint() {
+        return flightDeparturePoint;
     }
 
-    public void setFlightDeparture(Planet flightDeparture) {
-        this.flightDeparture = flightDeparture;
+    public void setFlightDeparturePoint(Planet flightDeparturePoint) {
+        this.flightDeparturePoint = flightDeparturePoint;
     }
 
     public double getFlightCost() {
@@ -169,6 +180,29 @@ public class Flight {
         this.passengers = passengers;
     }
 
+    public Timestamp getArrivalTime() {
+        return arrivalTime;
+    }
+
+    public void setArrivalTime(Timestamp arrivalTime) {
+        this.arrivalTime = arrivalTime;
+    }
+
+    public Timestamp getDepartureTime() {
+        return departureTime;
+    }
+
+    public void setDepartureTime(Timestamp departureTime) {
+        this.departureTime = departureTime;
+    }
+
+    public void addPassenger(Users... passenger) {
+        if (passenger == null) passengers = new ArrayList<>();
+        for (Users p : passenger) {
+            passengers.add(p);
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -180,15 +214,17 @@ public class Flight {
                 Double.compare(flight.flightCost, flightCost) == 0 &&
                 Objects.equals(company, flight.company) &&
                 Objects.equals(flightDuration, flight.flightDuration) &&
+                Objects.equals(arrivalTime, flight.arrivalTime) &&
+                Objects.equals(departureTime, flight.departureTime) &&
                 Objects.equals(flightDestination, flight.flightDestination) &&
-                Objects.equals(flightDeparture, flight.flightDeparture) &&
+                Objects.equals(flightDeparturePoint, flight.flightDeparturePoint) &&
                 flightStatus == flight.flightStatus &&
                 Objects.equals(passengers, flight.passengers);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, availableSeats, totalSeats, company, flightDuration, flightDestination, flightDeparture, flightCost, flightStatus, passengers);
+        return Objects.hash(id, availableSeats, totalSeats, company, flightDuration, arrivalTime, departureTime, flightDestination, flightDeparturePoint, flightCost, flightStatus, passengers);
     }
 
     @Override
@@ -199,12 +235,13 @@ public class Flight {
                 ", totalSeats=" + totalSeats +
                 ", company=" + company +
                 ", flightDuration='" + flightDuration + '\'' +
+                ", arrivalTime=" + arrivalTime +
+                ", departureTime=" + departureTime +
                 ", flightDestination=" + flightDestination +
-                ", flightDeparture=" + flightDeparture +
+                ", flightDeparturePoint=" + flightDeparturePoint +
                 ", flightCost=" + flightCost +
                 ", flightStatus=" + flightStatus +
                 ", passengers=" + passengers +
                 '}';
     }
->>>>>>> c8b5f75d7054988acc6f38daf7775736a7c90e9f
 }

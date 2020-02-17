@@ -91,6 +91,14 @@ public class Company {
         this.planetOfOperations = planetOfOperations;
     }
 
+    public Users getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Users owner) {
+        this.owner = owner;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -100,12 +108,13 @@ public class Company {
                 businessPhoneNumber == company.businessPhoneNumber &&
                 Objects.equals(companyName, company.companyName) &&
                 Objects.equals(companyEmail, company.companyEmail) &&
-                Objects.equals(planetOfOperations, company.planetOfOperations);
+                Objects.equals(planetOfOperations, company.planetOfOperations) &&
+                Objects.equals(owner, company.owner);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, companyName, companyEmail, businessPhoneNumber, planetOfOperations);
+        return Objects.hash(id, companyName, companyEmail, businessPhoneNumber, planetOfOperations, owner);
     }
 
     @Override
@@ -116,6 +125,7 @@ public class Company {
                 ", companyEmail='" + companyEmail + '\'' +
                 ", businessPhoneNumber=" + businessPhoneNumber +
                 ", planetOfOperations='" + planetOfOperations + '\'' +
+                ", owner=" + owner +
                 '}';
     }
 }
