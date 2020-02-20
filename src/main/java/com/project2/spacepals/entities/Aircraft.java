@@ -18,9 +18,6 @@ public class Aircraft implements Serializable {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @Column(nullable = false, unique = true)
-    private double rate;
-
     @JoinColumn
     @ManyToOne(cascade={
             CascadeType.REMOVE, CascadeType.DETACH,
@@ -32,19 +29,14 @@ public class Aircraft implements Serializable {
     @Enumerated(EnumType.STRING)
     private Capacity capacity;
 
-    @Enumerated(EnumType.STRING)
-    private RentalStatus status;
-
     public Aircraft() {
         super();
     }
 
-    public Aircraft(String name, double rate, Capacity capacity, Company owner, RentalStatus status) {
+    public Aircraft(String name, Capacity capacity, Company owner) {
         this.name = name;
-        this.rate = rate;
         this.owner = owner;
         this.capacity = capacity;
-        this.status = status;
     }
 
 
@@ -64,14 +56,6 @@ public class Aircraft implements Serializable {
         this.name = name;
     }
 
-    public double getRate() {
-        return rate;
-    }
-
-    public void setRate(double rate) {
-        this.rate = rate;
-    }
-
     public Company getOwner() {
         return owner;
     }
@@ -88,13 +72,6 @@ public class Aircraft implements Serializable {
         this.capacity = capacity;
     }
 
-    public RentalStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(RentalStatus status) {
-        this.status = status;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -102,16 +79,14 @@ public class Aircraft implements Serializable {
         if (!(o instanceof Aircraft)) return false;
         Aircraft aircraft = (Aircraft) o;
         return getId() == aircraft.getId() &&
-                Double.compare(aircraft.getRate(), getRate()) == 0 &&
                 Objects.equals(getName(), aircraft.getName()) &&
                 Objects.equals(getOwner(), aircraft.getOwner()) &&
-                getCapacity() == aircraft.getCapacity() &&
-                getStatus() == aircraft.getStatus();
+                getCapacity() == aircraft.getCapacity();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getRate(), getCapacity(), getStatus());
+        return Objects.hash(getId(), getName(), getCapacity());
     }
 
     @Override
@@ -119,10 +94,8 @@ public class Aircraft implements Serializable {
         return "Aircraft{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", rate=" + rate +
                 ", owner=" + owner +
                 ", capacity=" + capacity +
-                ", status=" + status +
                 '}';
     }
 }
