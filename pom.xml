@@ -16,7 +16,7 @@
         <powermock.version>2.0.2</powermock.version>
         <spring.version>5.2.3.RELEASE</spring.version>
         <jackson.version>2.10.1</jackson.version>
-        <log4j.version>2.6.1</log4j.version>
+        <log4j.version>2.13.3</log4j.version>
     </properties>
 
     <dependencies>
